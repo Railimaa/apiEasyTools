@@ -22,10 +22,18 @@ interface UpdateTransactionProps {
   value: number;
 }
 
+
+
 class TransactionsRepository {
-    async findAllByUserId(userId: string) {
+    async findAllByUserId(userId: string, filters: { Month: number; Year: number }) {
         return prisma.transaction.findMany({
-            where: { userId }
+            where: {
+                userId,
+                date: {
+                    gte: new Date(Date.UTC(filters.Year, filters.Month)),
+                    lt: new Date(Date.UTC(filters.Year, filters.Month + 1)),
+                }
+            }
         });
     }
 

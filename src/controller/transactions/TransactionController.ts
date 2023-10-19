@@ -8,8 +8,18 @@ import { isValidUUID } from '../../utils/isValidUUID';
 class TransactionController {
     async findAll(req: Request, res: Response) {
         const userId  = req.userId;
+        const { month, year } = req.query;
 
-        const listTransactions = await TransactionsRepository.findAllByUserId(userId);
+        const Month = Number(month);
+        const Year = Number(year);
+
+        if (!Month || !Year) {
+            return res.status(400).json({ message: 'query params is required' });
+        }
+
+        const listTransactions = await TransactionsRepository.findAllByUserId(userId, { Month, Year });
+
+        console.log({ Month, Year });
 
         res.json(listTransactions);
     }
@@ -44,6 +54,9 @@ class TransactionController {
             res.json(transaction);
         }
         catch(err) {
+            console.error('Erro na criação da transação:', err); // Adicione esta linha para registrar o erro no console
+
+
             if (err instanceof z.ZodError) {
                 return res.status(400).json(err);
             } else {
