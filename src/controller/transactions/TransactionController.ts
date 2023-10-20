@@ -4,11 +4,26 @@ import { createTransactionDto } from './dto/createTransactionDto';
 import { z } from 'zod';
 import { updateTransactionDto } from './dto/updateTransactionDto';
 import { isValidUUID } from '../../utils/isValidUUID';
+import { TransactionsType } from './entities/TransactionType';
 
 class TransactionController {
     async findAll(req: Request, res: Response) {
         const userId  = req.userId;
-        const { month, year } = req.query;
+        const { month, year, bankAccountId, type } = req.query;
+
+
+
+        if (typeof bankAccountId !== 'string' && typeof bankAccountId !== 'undefined') {
+            return res.status(400).json({ message: 'query params bankAccount must be string' });
+        }
+
+
+
+        if (typeof type !== 'undefined') {
+            if (type !== TransactionsType.EXPENSE && type !== TransactionsType.INCOME) {
+                return res.status(400).json({ message: 'type must be "EXPENSE" or "INCOME"' });
+            }
+        }
 
         const Month = Number(month);
         const Year = Number(year);
@@ -17,9 +32,8 @@ class TransactionController {
             return res.status(400).json({ message: 'query params is required' });
         }
 
-        const listTransactions = await TransactionsRepository.findAllByUserId(userId, { Month, Year });
+        const listTransactions = await TransactionsRepository.findAllByUserId(userId, { Month, Year, bankAccountId, type });
 
-        console.log({ Month, Year });
 
         res.json(listTransactions);
     }

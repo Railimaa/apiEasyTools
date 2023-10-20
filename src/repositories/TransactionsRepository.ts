@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { TransactionsType } from '../controller/transactions/entities/TransactionType';
 
 const prisma = new PrismaClient;
 
@@ -22,16 +23,30 @@ interface UpdateTransactionProps {
   value: number;
 }
 
+// interface Filters {
+
+// }
 
 
 class TransactionsRepository {
-    async findAllByUserId(userId: string, filters: { Month: number; Year: number }) {
+    async findAllByUserId(userId: string, filters: { Month: number; Year: number, bankAccountId?: string, type?: TransactionsType}) {
         return prisma.transaction.findMany({
             where: {
                 userId,
+                bankAccountId: filters.bankAccountId,
+                type: filters.type,
                 date: {
                     gte: new Date(Date.UTC(filters.Year, filters.Month)),
                     lt: new Date(Date.UTC(filters.Year, filters.Month + 1)),
+                }
+            },
+            include: {
+                categoryTransaction: {
+                    select: {
+                        id: true,
+                        name: true,
+                        icon: true
+                    }
                 }
             }
         });

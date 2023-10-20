@@ -22,8 +22,29 @@ interface UpdateBankAcountProps {
 
 class BankAccountsRepository {
     async findAllByUserId(userId: string) {
-        return prisma.bankAccount.findMany({
-            where: { userId }
+        const bankAccounts = await prisma.bankAccount.findMany({
+            where: { userId },
+            include: {
+                transactions: {
+                    select: {
+                        value: true,
+                        type: true
+                    }
+                }
+            }
+        });
+
+        return bankAccounts.map(({ transactions, ...bankAccount }) => {
+            const totalTransactions = transactions.reduce((acc, transaction) => (
+                acc + (transaction.type === 'INCOME' ? transaction.value : -transaction.value)
+            ), 0);
+
+            const currentBalance = bankAccount.initialBalance + totalTransactions;
+
+            return {
+                ...bankAccount,
+                currentBalance: currentBalance
+            };
         });
     }
 
