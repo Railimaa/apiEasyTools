@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
-import UsersRepository from '../../repositories/UsersRepository';
-import { z } from 'zod';
 import { compare, hash } from 'bcryptjs';
-import { signin } from './dto/signin';
+import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { z } from 'zod';
 import { env } from '../../config/env';
+import UsersRepository from '../../repositories/UsersRepository';
+import { signin } from './dto/signin';
 import { signup } from './dto/signup';
 
 

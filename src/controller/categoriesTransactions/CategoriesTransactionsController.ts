@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import CategoriesTransactionsRepository from '../../repositories/CategoriesTransactionsRepository';
-import { createCategoryTransactionDto } from './dto/createCategoryTransactionDto';
 import { z } from 'zod';
-import { updateCategoryTransactionDto } from './dto/updateCategoryTransactionDto';
+import CategoriesTransactionsRepository from '../../repositories/CategoriesTransactionsRepository';
 import { isValidUUID } from '../../utils/isValidUUID';
+import { createCategoryTransactionDto } from './dto/createCategoryTransactionDto';
+import { updateCategoryTransactionDto } from './dto/updateCategoryTransactionDto';
 
 class CategoriesController {
     async findAll(req: Request, res: Response) {
@@ -92,4 +92,4 @@ class CategoriesController {
     }
 }
 
-export default new CategoriesController;
+export default new CategoriesController();

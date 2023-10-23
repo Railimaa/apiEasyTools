@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import AuthController from '../src/controller/auth/AuthController';
+import BankAccountsController from './controller/bankAccounts/BankAccountsController';
+import CategoriesTransactionsController from './controller/categoriesTransactions/CategoriesTransactionsController';
+import TransactionController from './controller/transactions/TransactionController';
 import UsersController from './controller/users/UsersController';
 import { checkToken } from './middlewares/checkToken';
-import CategoriesTransactionsController from './controller/categoriesTransactions/CategoriesTransactionsController';
-import BankAccountsController from './controller/bankAccounts/BankAccountsController';
-import TransactionController from './controller/transactions/TransactionController';
 
 
 export const router = Router();

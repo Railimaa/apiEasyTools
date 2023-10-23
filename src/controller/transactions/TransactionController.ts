@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import TransactionsRepository from '../../repositories/TransactionsRepository';
-import { createTransactionDto } from './dto/createTransactionDto';
 import { z } from 'zod';
-import { updateTransactionDto } from './dto/updateTransactionDto';
+import TransactionsRepository from '../../repositories/TransactionsRepository';
 import { isValidUUID } from '../../utils/isValidUUID';
+import { createTransactionDto } from './dto/createTransactionDto';
+import { updateTransactionDto } from './dto/updateTransactionDto';
 import { TransactionsType } from './entities/TransactionType';
 
 class TransactionController {
@@ -68,9 +68,6 @@ class TransactionController {
             res.json(transaction);
         }
         catch(err) {
-            console.error('Erro na criação da transação:', err); // Adicione esta linha para registrar o erro no console
-
-
             if (err instanceof z.ZodError) {
                 return res.status(400).json(err);
             } else {
@@ -148,4 +145,4 @@ class TransactionController {
 }
 
 
-export default new TransactionController;
+export default new TransactionController();
