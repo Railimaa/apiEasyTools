@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const createCategoryTransactionDto = z.object({
-    name: z.string().min(1, 'name is required'),
+  name: z.string().min(1, 'name is required'),
 
-    icon: z.string().min(1, 'icon is required'),
+  icon: z.string().min(1, 'icon is required'),
 
-    type: z.enum(['INCOME', 'EXPENSE']),
+  type: z.enum(['INCOME', 'EXPENSE']),
 });

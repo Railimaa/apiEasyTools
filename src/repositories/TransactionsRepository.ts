@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import { TransactionsType } from '../controller/transactions/entities/TransactionType';
+import { TransactionsType } from '../controller/transactions/entities/TransactionsType';
 
 const prisma = new PrismaClient();
 

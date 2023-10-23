@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import { z } from 'zod';
+
 import BankAccountsRepository from '../../repositories/BankAccountsRepository';
 import { isValidUUID } from '../../utils/isValidUUID';
+
 import { createBankAccountDto } from './dto/createBankAccountDto';
 import { updateBankAccountDto } from './dto/updateBankAccountDto';
 
@@ -29,7 +31,7 @@ class BankAccountsController {
         color,
       });
 
-      res.json(newBankAccount);
+      return res.json(newBankAccount);
     } catch (err) {
       if (err instanceof z.ZodError) {
         return res.status(400).json(err);
@@ -64,7 +66,7 @@ class BankAccountsController {
         color,
       });
 
-      res.json(updateBankAccount);
+      return res.json(updateBankAccount);
     } catch (err) {
       if (err instanceof z.ZodError) {
         return res.status(400).json(err);
@@ -90,7 +92,7 @@ class BankAccountsController {
 
       await BankAccountsRepository.remove(bankAccountId);
 
-      res.sendStatus(204);
+      return res.sendStatus(204);
     } catch (err) {
       return res.status(400).json({ message: err });
     }

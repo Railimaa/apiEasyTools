@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-
 interface UsersRepositoryProps {
   name: string;
   email: string;
@@ -10,82 +9,78 @@ interface UsersRepositoryProps {
 }
 
 class UsersRepository {
-    async create({ name, email, password }: UsersRepositoryProps) {
-        const user = await prisma.user.create({
-            data: {
-                name,
-                email,
-                password,
-                categoryTransaction: {
-                    createMany: {
-                        data: [
-                            // Income
-                            { name: 'Salário', icon: 'salary', type: 'INCOME' },
-                            { name: 'Freelance', icon: 'freelance', type: 'INCOME' },
-                            { name: 'Outro', icon: 'other', type: 'INCOME' },
-                            // Expense
-                            { name: 'Casa', icon: 'home', type: 'EXPENSE' },
-                            { name: 'Alimentação', icon: 'food', type: 'EXPENSE' },
-                            { name: 'Educação', icon: 'education', type: 'EXPENSE' },
-                            { name: 'Lazer', icon: 'fun', type: 'EXPENSE' },
-                            { name: 'Mercado', icon: 'grocery', type: 'EXPENSE' },
-                            { name: 'Roupas', icon: 'clothes', type: 'EXPENSE' },
-                            { name: 'Transporte', icon: 'transport', type: 'EXPENSE' },
-                            { name: 'Viagem', icon: 'travel', type: 'EXPENSE' },
-                            { name: 'Outro', icon: 'other', type: 'EXPENSE' },
-                        ]
-                    }
-                },
-                categoryContacts: {
-                    createMany: {
-                        data: [
-                            { name: 'Instagram' },
-                            { name: 'Facebook' },
-                            { name: 'Twitter' }
-                        ]
-                    }
-                },
-                categoryTask: {
-                    createMany: {
-                        data: [
-                            { name: 'Casa' },
-                            { name: 'Trabalho' },
-                            { name: 'Pessoal' }
-                        ]
-                    }
-                }
-            }
-        });
+  async create({ name, email, password }: UsersRepositoryProps) {
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+        categoryTransaction: {
+          createMany: {
+            data: [
+              // Income
+              { name: 'Salário', icon: 'salary', type: 'INCOME' },
+              { name: 'Freelance', icon: 'freelance', type: 'INCOME' },
+              { name: 'Outro', icon: 'other', type: 'INCOME' },
+              // Expense
+              { name: 'Casa', icon: 'home', type: 'EXPENSE' },
+              { name: 'Alimentação', icon: 'food', type: 'EXPENSE' },
+              { name: 'Educação', icon: 'education', type: 'EXPENSE' },
+              { name: 'Lazer', icon: 'fun', type: 'EXPENSE' },
+              { name: 'Mercado', icon: 'grocery', type: 'EXPENSE' },
+              { name: 'Roupas', icon: 'clothes', type: 'EXPENSE' },
+              { name: 'Transporte', icon: 'transport', type: 'EXPENSE' },
+              { name: 'Viagem', icon: 'travel', type: 'EXPENSE' },
+              { name: 'Outro', icon: 'other', type: 'EXPENSE' },
+            ],
+          },
+        },
+        categoryContacts: {
+          createMany: {
+            data: [
+              { name: 'Instagram' },
+              { name: 'Facebook' },
+              { name: 'Twitter' },
+            ],
+          },
+        },
+        categoryTask: {
+          createMany: {
+            data: [
+              { name: 'Casa' },
+              { name: 'Trabalho' },
+              { name: 'Pessoal' },
+            ],
+          },
+        },
+      },
+    });
 
-        return user;
-    }
+    return user;
+  }
 
-    async findyUnique(email: string) {
-        return prisma.user.findUnique({
-            where: { email },
-            select: { id: true }
-        });
-    }
+  async findyUnique(email: string) {
+    return prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+  }
 
-    async findFirst(email: string) {
-        return prisma.user.findFirst({
-            where: { email },
-        });
-    }
+  async findFirst(email: string) {
+    return prisma.user.findFirst({
+      where: { email },
+    });
+  }
 
-
-    async getUserById(userId: string) {
-        return prisma.user.findUnique({
-            where: { id: userId },
-            select: {
-                name: true,
-                email: true
-            }
-        });
-    }
+  async getUserById(userId: string) {
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        name: true,
+        email: true,
+      },
+    });
+  }
 }
 
-
-
 export default new UsersRepository();
-
