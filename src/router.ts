@@ -4,6 +4,7 @@ import AuthController from './controller/auth/AuthController';
 import BankAccountsController from './controller/bankAccounts/BankAccountsController';
 import CategoriesContactController from './controller/categoriesContact/CategoriesContactController';
 import CategoriesTransactionsController from './controller/categoriesTransactions/CategoriesTransactionsController';
+import ContactController from './controller/contacts/ContactController';
 import TransactionController from './controller/transactions/TransactionController';
 import UsersController from './controller/users/UsersController';
 import { checkToken } from './middlewares/checkToken';
@@ -35,7 +36,10 @@ router.post('/transactions', checkToken, TransactionController.create);
 router.put('/transactions/:transactionId', checkToken, TransactionController.update);
 router.delete('/transactions/:transactionId', checkToken, TransactionController.remove);
 
-// Contacts //
+// Contacts
+router.get('/contacts', checkToken, ContactController.findAll);
+router.post('/contacts', checkToken, ContactController.create);
+router.put('/contacts/:contactId', checkToken, ContactController.update);
 
 // Categories-contacts
 router.get('/categoriesContacts', checkToken, CategoriesContactController.findAll);
