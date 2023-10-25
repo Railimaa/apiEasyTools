@@ -85,6 +85,25 @@ class ContactController {
       return res.status(500).json({ message: 'Error in server' });
     }
   }
+
+  async remove(req: Request, res: Response) {
+    const { userId } = req;
+    const { contactId } = req.params;
+
+    if (!isValidUUID(contactId)) {
+      return res.status(400).json({ message: 'Invalid uuid' });
+    }
+
+    const isOwnerContact = await ContactsRepository.findFirstContact(contactId, userId);
+
+    if (!isOwnerContact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+
+    await ContactsRepository.remove(contactId);
+
+    return res.sendStatus(204);
+  }
 }
 
 export default new ContactController();

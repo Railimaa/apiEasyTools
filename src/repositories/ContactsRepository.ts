@@ -69,6 +69,12 @@ class ContactsRepository {
       },
     });
   }
+
+  async remove(contactId: string) {
+    return prisma.contact.delete({
+      where: { id: contactId },
+    });
+  }
 }
 
 export default new ContactsRepository();

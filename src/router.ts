@@ -40,6 +40,7 @@ router.delete('/transactions/:transactionId', checkToken, TransactionController.
 router.get('/contacts', checkToken, ContactController.findAll);
 router.post('/contacts', checkToken, ContactController.create);
 router.put('/contacts/:contactId', checkToken, ContactController.update);
+router.delete('/contacts/:contactId', checkToken, ContactController.remove);
 
 // Categories-contacts
 router.get('/categoriesContacts', checkToken, CategoriesContactController.findAll);
