@@ -115,9 +115,9 @@ model CategoryTask {
   id     String @id @default(uuid()) @db.Uuid
   userId String @map("user_id") @db.Uuid
   name   String
+  Task   Task[]
 
-  user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Task Task[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("category_task")
 }

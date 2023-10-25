@@ -3,6 +3,7 @@ import { Router } from 'express';
 import AuthController from './controller/auth/AuthController';
 import BankAccountsController from './controller/bankAccounts/BankAccountsController';
 import CategoriesContactController from './controller/categoriesContact/CategoriesContactController';
+import CategoriesTaskController from './controller/categoriesTask/CategoriesTaskController';
 import CategoriesTransactionsController from './controller/categoriesTransactions/CategoriesTransactionsController';
 import ContactController from './controller/contacts/ContactController';
 import TransactionController from './controller/transactions/TransactionController';
@@ -47,3 +48,9 @@ router.get('/categoriesContacts', checkToken, CategoriesContactController.findAl
 router.post('/categoriesContacts', checkToken, CategoriesContactController.create);
 router.put('/categoriesContacts/:categoryContactId', checkToken, CategoriesContactController.update);
 router.delete('/categoriesContacts/:categoryContactId', checkToken, CategoriesContactController.remove);
+
+// Tasks
+
+// Categories-tasks
+router.get('/categoriesTasks', checkToken, CategoriesTaskController.findAll);
+router.post('/categoriesTasks', checkToken, CategoriesTaskController.create);

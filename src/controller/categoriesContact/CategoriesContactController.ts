@@ -42,6 +42,10 @@ class CategoriesContactController {
         return res.status(400).json({ message: 'invalid uuid' });
       }
 
+      if (!name) {
+        return res.status(400).json({ message: 'Name is required' });
+      }
+
       const isOwner = await CategoriesContactsRepository.findFirst(categoryContactId, userId);
 
       if (!isOwner) {
