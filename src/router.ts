@@ -54,3 +54,5 @@ router.delete('/categoriesContacts/:categoryContactId', checkToken, CategoriesCo
 // Categories-tasks
 router.get('/categoriesTasks', checkToken, CategoriesTaskController.findAll);
 router.post('/categoriesTasks', checkToken, CategoriesTaskController.create);
+router.put('/categoriesTasks/:categoryTaskId', checkToken, CategoriesTaskController.update);
+router.delete('/categoriesTasks/:categoryTaskId', checkToken, CategoriesTaskController.remove);
