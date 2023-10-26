@@ -10,8 +10,17 @@ import { updateContactDto } from './dto/updateContact';
 class ContactController {
   async findAll(req: Request, res: Response) {
     const { userId } = req;
+    const { categoryId, orderBy } = req.query;
 
-    const listAll = await ContactsRepository.findAllByUserId(userId);
+    if (typeof categoryId !== 'string' && typeof categoryId !== 'undefined') {
+      return res.status(400).json({ message: 'categoryId tem que ter um valor' });
+    }
+
+    if (typeof orderBy !== 'string' && typeof orderBy !== 'undefined') {
+      return res.status(400).json({ message: 'categoryId tem que ter um valor' });
+    }
+
+    const listAll = await ContactsRepository.findAllByUserId(userId, categoryId, orderBy);
 
     return res.json(listAll);
   }
@@ -27,6 +36,13 @@ class ContactController {
 
       if (!isOwner) {
         return res.status(404).json({ message: 'Category contact not found' });
+      }
+
+      if (email) {
+        const emailInUse = await ContactsRepository.findFirstEmail(email);
+        if (emailInUse) {
+          return res.status(400).json({ message: 'This e-mail already in use' });
+        }
       }
 
       const newContact = await ContactsRepository.create({
@@ -67,6 +83,13 @@ class ContactController {
 
       if (!isOwnerContact) {
         return res.status(404).json({ message: 'Contact not found' });
+      }
+
+      if (email) {
+        const emailInUse = await ContactsRepository.findFirstEmail(email);
+        if (emailInUse) {
+          return res.status(400).json({ message: 'This e-mail already in use' });
+        }
       }
 
       const updateContact = await ContactsRepository.update({

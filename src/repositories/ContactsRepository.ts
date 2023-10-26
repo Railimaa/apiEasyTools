@@ -19,15 +19,28 @@ interface UpdateContactProps {
 }
 
 class ContactsRepository {
-  async findAllByUserId(userId: string) {
-    return prisma.contact.findMany({
-      where: { userId },
+  async findAllByUserId(userId: string, categoryId?: string, orderBy?: string) {
+    const options = {
+      where: {
+        userId,
+        categoryId,
+      },
       include: {
         categoryContact: {
           select: { name: true, id: true },
         },
       },
-    });
+    };
+
+    let contacts = await prisma.contact.findMany(options);
+
+    if (orderBy === 'asc') {
+      contacts = contacts.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (orderBy === 'desc') {
+      contacts = contacts.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    return contacts;
   }
 
   async findFirstContact(contactId: string, userId: string) {
@@ -39,6 +52,13 @@ class ContactsRepository {
   async findFirstCategoryContact(categoryId: string, userId: string) {
     return prisma.categoryContact.findFirst({
       where: { id: categoryId, userId },
+    });
+  }
+
+  async findFirstEmail(email: string) {
+    return prisma.contact.findUnique({
+      where: { email },
+      select: { id: true },
     });
   }
 
