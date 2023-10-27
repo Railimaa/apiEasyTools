@@ -129,7 +129,7 @@ model Task {
   categoryId  String?   @map("category_id") @db.Uuid
   description String?
   dueDate     DateTime? @map("due_date")
-  completed   Boolean   @default(false)
+  done        Boolean   @default(false)
 
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   categoryTask CategoryTask? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
