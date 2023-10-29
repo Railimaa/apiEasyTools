@@ -17,7 +17,7 @@ class ContactController {
     }
 
     if (typeof orderBy !== 'string' && typeof orderBy !== 'undefined') {
-      return res.status(400).json({ message: 'categoryId tem que ter um valor' });
+      return res.status(400).json({ message: 'orderBy tem que ter um valor' });
     }
 
     const listAll = await ContactsRepository.findAllByUserId(userId, categoryId, orderBy);
