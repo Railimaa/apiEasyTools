@@ -10,8 +10,13 @@ import { updateTaskDto } from './dto/updateTask';
 class TaskController {
   async findAll(req: Request, res: Response) {
     const { userId } = req;
+    const { categoryId } = req.query;
 
-    const listAll = await TasksRepository.findAllByUserId(userId);
+    if (typeof categoryId !== 'string' && typeof categoryId !== 'undefined') {
+      return res.status(400).json({ message: 'CategoryId tem que ter um value' });
+    }
+
+    const listAll = await TasksRepository.findAllByUserId(userId, categoryId);
 
     return res.json(listAll);
   }
