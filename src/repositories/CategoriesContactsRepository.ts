@@ -9,6 +9,15 @@ class CategoriesContactsRepository {
     });
   }
 
+  async findContactsByCategory(categoryContactId: string) {
+    return prisma.categoryContact.findUnique({
+      where: { id: categoryContactId },
+      include: {
+        contact: true,
+      },
+    });
+  }
+
   async findFirst(categoryContactId: string, userId: string) {
     return prisma.categoryContact.findFirst({
       where: { id: categoryContactId, userId },

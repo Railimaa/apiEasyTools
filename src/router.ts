@@ -50,6 +50,7 @@ router.get('/categoriesContacts', checkToken, CategoriesContactController.findAl
 router.post('/categoriesContacts', checkToken, CategoriesContactController.create);
 router.put('/categoriesContacts/:categoryContactId', checkToken, CategoriesContactController.update);
 router.delete('/categoriesContacts/:categoryContactId', checkToken, CategoriesContactController.remove);
+router.get('/categoriesContacts/:categoryContactId/contacts', checkToken, CategoriesContactController.findAllByCategory);
 
 // Tasks
 router.get('/tasks', checkToken, TaskController.findAll);
