@@ -118,7 +118,7 @@ class TransactionController {
       return res.json(updateTransaction);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        return res.status(400).json({ message: err });
+        return res.status(400).json(err);
       }
       return res.status(500).json({ message: 'Error in server' });
     }
