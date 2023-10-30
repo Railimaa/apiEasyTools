@@ -9,6 +9,7 @@ import ContactController from './controller/contacts/ContactController';
 import TaskController from './controller/task/TaskController';
 import TransactionController from './controller/transactions/TransactionController';
 import UsersController from './controller/users/UsersController';
+import WheaterController from './controller/weather/WheaterController';
 import { checkToken } from './middlewares/checkToken';
 
 export const router = Router();
@@ -62,3 +63,5 @@ router.get('/categoriesTasks', checkToken, CategoriesTaskController.findAll);
 router.post('/categoriesTasks', checkToken, CategoriesTaskController.create);
 router.put('/categoriesTasks/:categoryTaskId', checkToken, CategoriesTaskController.update);
 router.delete('/categoriesTasks/:categoryTaskId', checkToken, CategoriesTaskController.remove);
+
+router.get('/weather', checkToken, WheaterController.findAll);
