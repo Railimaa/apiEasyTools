@@ -14,7 +14,7 @@ declare module 'express-serve-static-core' {
 export function checkToken(req: Request, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = authHeader && authHeader.split('Bearer ')[1];
 
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
