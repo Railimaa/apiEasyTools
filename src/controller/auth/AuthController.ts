@@ -12,7 +12,9 @@ import { signup } from './dto/signup';
 class AuthController {
   async signup(req: Request, res: Response) {
     try {
-      const { name, email, password } = signup.parse(req.body);
+      const {
+        name, firstName, email, password,
+      } = signup.parse(req.body);
 
       const emailTaken = await UsersRepository.findyUnique(email);
 
@@ -24,6 +26,7 @@ class AuthController {
 
       const user = await UsersRepository.create({
         name,
+        firstName,
         email,
         password: hashedPassword,
       });
