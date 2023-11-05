@@ -4,19 +4,19 @@ const prisma = new PrismaClient();
 
 interface UsersRepositoryProps {
   name: string;
-  firstName: string;
+  secondName: string;
   email: string;
   password: string;
 }
 
 class UsersRepository {
   async create({
-    name, firstName, email, password,
+    name, secondName, email, password,
   }: UsersRepositoryProps) {
     const user = await prisma.user.create({
       data: {
         name,
-        firstName,
+        secondName,
         email,
         password,
         categoryTransaction: {
@@ -81,7 +81,7 @@ class UsersRepository {
       where: { id: userId },
       select: {
         name: true,
-        firstName: true,
+        secondName: true,
         email: true,
       },
     });

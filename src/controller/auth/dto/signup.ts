@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const signup = z.object({
   name: z.string().min(1, 'name is required'),
 
-  firstName: z.string().min(1, 'first name is required'),
+  secondName: z.string().min(1, 'second name is required'),
 
   email: z.string().email('Informe um email valido').min(1, 'Email is required'),
 
