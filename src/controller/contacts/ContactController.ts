@@ -87,7 +87,7 @@ class ContactController {
 
       if (email) {
         const emailInUse = await ContactsRepository.findFirstEmail(email);
-        if (emailInUse) {
+        if (emailInUse && emailInUse.id !== contactId) {
           return res.status(400).json({ message: 'This e-mail already in use' });
         }
       }

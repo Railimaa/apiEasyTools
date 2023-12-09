@@ -4,18 +4,18 @@ const prisma = new PrismaClient();
 
 interface CreateContactProps {
   userId: string;
-  categoryId: string;
-  email?: string;
   name: string;
-  phone?: string
+  categoryId: string;
+  email: string | undefined;
+  phone: string | undefined
 }
 
 interface UpdateContactProps {
   contactId: string;
-  categoryId: string;
-  email?: string;
   name: string;
-  phone?: string
+  categoryId: string;
+  email: string | undefined;
+  phone: string | undefined;
 }
 
 class ContactsRepository {

@@ -1,13 +1,5 @@
 import { z } from 'zod';
 
-function formatPhoneNumber(value: string) {
-  const numericOnly = value.replace(/\D/g, '');
-
-  const formattedPhoneNumber = `(${numericOnly.substring(0, 2)}) ${numericOnly.substring(2)}`;
-
-  return formattedPhoneNumber;
-}
-
 export const createContactDto = z.object({
   categoryId: z.string().uuid(),
 
@@ -15,7 +7,5 @@ export const createContactDto = z.object({
 
   email: z.string().email('Informe um e-mail válido').optional(),
 
-  phone: z.string().refine(formatPhoneNumber, {
-    message: 'Informe um numero de telefone valido',
-  }).optional(),
+  phone: z.string().optional(),
 });

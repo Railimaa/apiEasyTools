@@ -15,7 +15,5 @@ export const updateContactDto = z.object({
 
   email: z.string().email('Informe um e-mail válido').optional(),
 
-  phone: z.string().refine(formatPhoneNumber, {
-    message: 'Informe um numero de telefone valido',
-  }).optional(),
+  phone: z.string().optional(),
 });
