@@ -101,6 +101,10 @@ class TaskController {
       return res.status(400).json({ message: 'Invalid uuid' });
     }
 
+    if (!done) {
+      return res.status(400).json({ message: 'done is required' });
+    }
+
     const isOwnerTask = await TasksRepository.findFirstTask(taskId, userId);
 
     if (!isOwnerTask) {

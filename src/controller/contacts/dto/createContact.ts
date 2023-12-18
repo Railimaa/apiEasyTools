@@ -5,7 +5,7 @@ export const createContactDto = z.object({
 
   name: z.string().min(1, 'name is required'),
 
-  email: z.string().email('Informe um e-mail válido').optional(),
+  email: z.string().email().nullable(),
 
-  phone: z.string().optional(),
+  phone: z.string().nullable(),
 });

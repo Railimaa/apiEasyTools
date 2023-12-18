@@ -6,16 +6,16 @@ interface CreateContactProps {
   userId: string;
   name: string;
   categoryId: string;
-  email: string | undefined;
-  phone: string | undefined
+  email: string | null;
+  phone: string | null;
 }
 
 interface UpdateContactProps {
   contactId: string;
   name: string;
   categoryId: string;
-  email: string | undefined;
-  phone: string | undefined;
+  email: string | null;
+  phone: string | null;
 }
 
 class ContactsRepository {

@@ -6,7 +6,7 @@ interface CreateTaskProps {
   userId: string
   categoryId: string;
   name: string;
-  description?: string;
+  description: string | null;
   dueDate: string;
 }
 
@@ -14,7 +14,7 @@ interface UpdateTaskProps {
   taskId: string
   categoryId: string;
   name: string;
-  description?: string;
+  description: string | null;
   dueDate: string;
   done: boolean;
 }
