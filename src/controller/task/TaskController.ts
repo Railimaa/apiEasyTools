@@ -10,13 +10,17 @@ import { updateTaskDto } from './dto/updateTask';
 class TaskController {
   async findAll(req: Request, res: Response) {
     const { userId } = req;
-    const { categoryId } = req.query;
+    const { categoryId, type } = req.query;
 
     if (typeof categoryId !== 'string' && typeof categoryId !== 'undefined') {
       return res.status(400).json({ message: 'CategoryId tem que ter um value' });
     }
 
-    const listAll = await TasksRepository.findAllByUserId(userId, categoryId);
+    if (typeof type !== 'undefined' && type !== 'true' && type !== 'false') {
+      return res.status(400).json({ message: 'query params must be string or undefined' });
+    }
+
+    const listAll = await TasksRepository.findAllByUserId(userId, categoryId, typeof type === 'undefined' ? undefined : type === 'true');
 
     return res.json(listAll);
   }

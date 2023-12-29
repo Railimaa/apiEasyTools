@@ -20,9 +20,9 @@ interface UpdateTaskProps {
 }
 
 class TasksRepository {
-  async findAllByUserId(userId: string, categoryId?: string) {
+  async findAllByUserId(userId: string, categoryId?: string, type?: boolean) {
     return prisma.task.findMany({
-      where: { userId, categoryId },
+      where: { userId, categoryId, done: type },
       include: {
         categoryTask: {
           select: { id: true, name: true },
