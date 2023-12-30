@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -24,20 +25,22 @@ class CategoriesContactsRepository {
     });
   }
 
-  async create({ userId, name }: { userId: string, name: string }) {
+  async create({ userId, name, icon }: { userId: string, name: string, icon: string | null }) {
     return prisma.categoryContact.create({
       data: {
         userId,
         name,
+        icon,
       },
     });
   }
 
-  async update({ categoryContactId, name }: { categoryContactId: string, name: string }) {
+  async update({ categoryContactId, name, icon }: { categoryContactId: string, name: string, icon: string | null }) {
     return prisma.categoryContact.update({
       where: { id: categoryContactId },
       data: {
         name,
+        icon,
       },
     });
   }

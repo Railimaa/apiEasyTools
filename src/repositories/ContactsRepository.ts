@@ -27,7 +27,7 @@ class ContactsRepository {
       },
       include: {
         categoryContact: {
-          select: { name: true, id: true },
+          select: { name: true, id: true, icon: true },
         },
       },
     };

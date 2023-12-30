@@ -34,7 +34,7 @@ class CategoriesContactController {
   async create(req: Request, res: Response) {
     try {
       const { userId } = req;
-      const { name } = req.body;
+      const { name, icon } = req.body;
 
       if (!name) {
         return res.status(400).json({ message: 'Name is required' });
@@ -43,6 +43,7 @@ class CategoriesContactController {
       const newCategory = await CategoriesContactsRepository.create({
         userId,
         name,
+        icon,
       });
 
       return res.json(newCategory);
@@ -55,7 +56,7 @@ class CategoriesContactController {
     try {
       const { userId } = req;
       const { categoryContactId } = req.params;
-      const { name } = req.body;
+      const { name, icon } = req.body;
 
       if (!isValidUUID(categoryContactId)) {
         return res.status(400).json({ message: 'invalid uuid' });
@@ -74,6 +75,7 @@ class CategoriesContactController {
       const updateCategoryContact = await CategoriesContactsRepository.update({
         categoryContactId,
         name,
+        icon,
       });
 
       return res.json(updateCategoryContact);
