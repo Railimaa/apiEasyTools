@@ -25,7 +25,7 @@ class TasksRepository {
       where: { userId, categoryId, done: type },
       include: {
         categoryTask: {
-          select: { id: true, name: true },
+          select: { id: true, name: true, icon: true },
         },
       },
     });
