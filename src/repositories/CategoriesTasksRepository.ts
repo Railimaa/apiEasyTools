@@ -15,20 +15,22 @@ class CategoriesTasksRepository {
     });
   }
 
-  async create(userId: string, name: string) {
+  async create(userId: string, name: string, icon: string | null) {
     return prisma.categoryTask.create({
       data: {
         userId,
         name,
+        icon,
       },
     });
   }
 
-  async update(categoryTaskId: string, name: string) {
+  async update(categoryTaskId: string, name: string, icon: string | null) {
     return prisma.categoryTask.update({
       where: { id: categoryTaskId },
       data: {
         name,
+        icon,
       },
     });
   }

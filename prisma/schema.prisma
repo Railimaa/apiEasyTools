@@ -114,9 +114,10 @@ model Contact {
 }
 
 model CategoryTask {
-  id     String @id @default(uuid()) @db.Uuid
-  userId String @map("user_id") @db.Uuid
+  id     String  @id @default(uuid()) @db.Uuid
+  userId String  @map("user_id") @db.Uuid
   name   String
+  icon   String?
   Task   Task[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

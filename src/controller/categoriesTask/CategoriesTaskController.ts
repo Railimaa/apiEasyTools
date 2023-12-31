@@ -14,13 +14,13 @@ class CategoriesTaskController {
 
   async create(req: Request, res: Response) {
     const { userId } = req;
-    const { name } = req.body;
+    const { name, icon } = req.body;
 
     if (!name) {
       return res.status(400).json({ message: 'Name is required' });
     }
 
-    const newCategory = await CategoriesTasksRepository.create(userId, name);
+    const newCategory = await CategoriesTasksRepository.create(userId, name, icon);
 
     return res.json(newCategory);
   }
@@ -28,7 +28,7 @@ class CategoriesTaskController {
   async update(req: Request, res: Response) {
     const { userId } = req;
     const { categoryTaskId } = req.params;
-    const { name } = req.body;
+    const { name, icon } = req.body;
 
     if (!isValidUUID(categoryTaskId)) {
       return res.status(400).json({ message: 'Invalid uuid' });
@@ -44,7 +44,7 @@ class CategoriesTaskController {
       return res.status(404).json({ message: 'Category task not found' });
     }
 
-    const updateCategory = await CategoriesTasksRepository.update(categoryTaskId, name);
+    const updateCategory = await CategoriesTasksRepository.update(categoryTaskId, name, icon);
 
     return res.json(updateCategory);
   }
