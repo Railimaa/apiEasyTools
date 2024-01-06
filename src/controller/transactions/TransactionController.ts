@@ -29,8 +29,8 @@ class TransactionController {
     const Month = Number(month);
     const Year = Number(year);
 
-    if (!Month || !Year) {
-      return res.status(400).json({ message: 'query params is required' });
+    if (Number.isNaN(Month) || Number.isNaN(Year)) {
+      return res.status(400).json({ message: 'Query params month and year are required and must be valid numbers' });
     }
 
     const listTransactions = await TransactionsRepository.findAllByUserId(userId, {

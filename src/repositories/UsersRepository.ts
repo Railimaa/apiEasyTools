@@ -9,6 +9,14 @@ interface UsersRepositoryProps {
   password: string;
 }
 
+interface UserUpdateProps {
+  userId: string;
+  name: string;
+  secondName: string;
+  email: string;
+  imagePath?: string;
+}
+
 class UsersRepository {
   async create({
     name, secondName, email, password,
@@ -42,18 +50,18 @@ class UsersRepository {
         categoryContacts: {
           createMany: {
             data: [
-              { name: 'Instagram' },
-              { name: 'Facebook' },
-              { name: 'Twitter' },
+              { name: 'Instagram', icon: 'instagram' },
+              { name: 'Facebook', icon: 'facebook' },
+              { name: 'Twitter', icon: 'twitter' },
             ],
           },
         },
         categoryTask: {
           createMany: {
             data: [
-              { name: 'Casa' },
+              { name: 'Casa', icon: 'home' },
               { name: 'Trabalho' },
-              { name: 'Pessoal' },
+              { name: 'Pessoal', icon: 'me' },
             ],
           },
         },
@@ -80,9 +88,31 @@ class UsersRepository {
     return prisma.user.findUnique({
       where: { id: userId },
       select: {
+        id: true,
         name: true,
         secondName: true,
         email: true,
+        imagePath: true,
+      },
+    });
+  }
+
+  async update({
+    userId, name, secondName, email, imagePath,
+  }: UserUpdateProps) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        name,
+        secondName,
+        email,
+        imagePath,
+      },
+      select: {
+        name: true,
+        secondName: true,
+        email: true,
+        imagePath: true,
       },
     });
   }
