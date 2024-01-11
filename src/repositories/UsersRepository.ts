@@ -10,11 +10,11 @@ interface UsersRepositoryProps {
 }
 
 interface UserUpdateProps {
-  userId: string;
+  id: string;
   name: string;
   secondName: string;
   email: string;
-  imagePath?: string;
+  imagePath: string | null;
 }
 
 class UsersRepository {
@@ -31,9 +31,9 @@ class UsersRepository {
           createMany: {
             data: [
               // Income
-              { name: 'Salário', icon: 'salary', type: 'INCOME' },
-              { name: 'Freelance', icon: 'freelance', type: 'INCOME' },
-              { name: 'Outro', icon: 'other', type: 'INCOME' },
+              { name: 'Salário', icon: 'income', type: 'INCOME' },
+              { name: 'Freelance', icon: 'income', type: 'INCOME' },
+              { name: 'Outro', icon: 'income', type: 'INCOME' },
               // Expense
               { name: 'Casa', icon: 'home', type: 'EXPENSE' },
               { name: 'Alimentação', icon: 'food', type: 'EXPENSE' },
@@ -98,10 +98,10 @@ class UsersRepository {
   }
 
   async update({
-    userId, name, secondName, email, imagePath,
+    id, name, secondName, email, imagePath,
   }: UserUpdateProps) {
     return prisma.user.update({
-      where: { id: userId },
+      where: { id },
       data: {
         name,
         secondName,
@@ -113,6 +113,28 @@ class UsersRepository {
         secondName: true,
         email: true,
         imagePath: true,
+      },
+    });
+  }
+
+  async findFirstImage(userId: string, imagePath: string) {
+    return prisma.user.findFirst({
+      where: { id: userId, imagePath },
+    });
+  }
+
+  async findFirstUser(id: string) {
+    return prisma.user.findUnique({
+      where: { id },
+      select: { id: true, imagePath: true },
+    });
+  }
+
+  async updateImage(userId: string, imagePath: string | null) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        imagePath,
       },
     });
   }

@@ -1,7 +1,4 @@
-import path from 'node:path';
-
 import { Router } from 'express';
-import multer from 'multer';
 
 import AuthController from './controller/auth/AuthController';
 import BankAccountsController from './controller/bankAccounts/BankAccountsController';
@@ -14,19 +11,9 @@ import TransactionController from './controller/transactions/TransactionControll
 import UsersController from './controller/users/UsersController';
 import WheaterController from './controller/weather/WheaterController';
 import { checkToken } from './middlewares/checkToken';
+import { handleImageUpload } from './middlewares/handleImageUpload';
 
 export const router = Router();
-
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, callback) {
-      callback(null, path.resolve(__dirname, '..', 'uploads'));
-    },
-    filename(req, file, callback) {
-      callback(null, `${Date.now()}-${file.originalname}`);
-    },
-  }),
-});
 
 // Auth
 router.post('/auth/signup', AuthController.signup);
@@ -34,7 +21,8 @@ router.post('/auth/signin', AuthController.signin);
 
 // Users
 router.get('/users/me', checkToken, UsersController.me);
-router.put('/users/:userId', checkToken, upload.single('imagePath'), UsersController.update);
+router.put('/users/:id', checkToken, handleImageUpload, UsersController.update);
+router.delete('/users/:imagePath', checkToken, UsersController.deleteImage);
 
 // Categories-transaction
 router.get('/categoriesTransactions', checkToken, CategoriesTransactionsController.findAll);

@@ -11,23 +11,21 @@ declare module 'express-serve-static-core' {
   }
 }
 
-export function checkToken(req: Request, res: Response, next: NextFunction) {
+export async function checkToken(req: Request, res: Response, next: NextFunction) {
   try {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split('Bearer ')[1];
+    const { authorization } = req.headers;
+    const token = authorization && authorization.split('Bearer ')[1];
 
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
     const secret = env.jwtSecret;
-
     const payload = jwt.verify(token, secret) as { sub: string };
-
     req.userId = payload.sub;
 
     return next();
   } catch {
-    return res.status(500).json({ message: 'Invalid Token' });
+    return res.status(500).json({ message: 'Invalid token' });
   }
 }
