@@ -33,11 +33,11 @@ class BankAccountsRepository {
     });
 
     return bankAccounts.map(({ transactions, ...bankAccount }) => {
-      const totalTransactions = transactions.reduce((acc, transaction) => (
-        acc + (transaction.type === 'INCOME' ? transaction.value : -transaction.value)
+      const totalTransaction = transactions.reduce((total, transaction) => (
+        total + (transaction.type === 'INCOME' ? transaction.value : -transaction.value)
       ), 0);
 
-      const currentBalance = bankAccount.initialBalance + totalTransactions;
+      const currentBalance = bankAccount.initialBalance + totalTransaction;
 
       return {
         ...bankAccount,

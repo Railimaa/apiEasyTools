@@ -17,9 +17,9 @@ interface updateCategoryTransactionProps {
 }
 
 class CategoriesTransactionsRepository {
-  async findAllByUserId(userId: string) {
+  async findAllByUserId(userId: string, type?: 'INCOME' | 'EXPENSE') {
     return prisma.categoryTransaction.findMany({
-      where: { userId },
+      where: { userId, type },
     });
   }
 

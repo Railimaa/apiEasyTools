@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 /* eslint-disable max-len */
 import { Request, Response } from 'express';
 import { z } from 'zod';
@@ -11,10 +12,17 @@ import { updateCategoryTransactionDto } from './dto/updateCategoryTransactionDto
 class CategoriesController {
   async findAll(req: Request, res: Response) {
     const { userId } = req;
+    const { type } = req.query;
 
-    const categories = await CategoriesTransactionsRepository.findAllByUserId(userId);
+    if (typeof type !== 'undefined') {
+      if (type !== 'INCOME' && type !== 'EXPENSE') {
+        return res.status(400).json({ message: 'Type must be INCOME or EXPENSE' });
+      }
+    }
 
-    res.json(categories);
+    const categories = await CategoriesTransactionsRepository.findAllByUserId(userId, type);
+
+    return res.json(categories);
   }
 
   async create(req: Request, res: Response) {
