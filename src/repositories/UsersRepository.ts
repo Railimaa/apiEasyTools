@@ -65,6 +65,31 @@ class UsersRepository {
             ],
           },
         },
+        categoryBankAccount: {
+          createMany: {
+            data: [
+              { icon: 'nubank', color: '#8A05BE' },
+              { icon: 'santander', color: '#EA1D25' },
+              { icon: 'brb', color: '#00ADEF' },
+              { icon: 'itau', color: '#33348e' },
+              { icon: 'pagbank', color: '#FFE72D' },
+              { icon: 'bradesco', color: '#cc203c' },
+              { icon: 'bb', color: '#fde100' },
+              { icon: 'safra', color: '#000000' },
+              { icon: 'neon', color: '#0F91FF' },
+              { icon: 'caixa', color: '#0d6fab' },
+              { icon: 'inter', color: '#ff7a00' },
+              { icon: 'paypal', color: '#253b80' },
+              { icon: 'picpay', color: '#21c25e' },
+              { icon: 'nuinvest', color: '#4c0677' },
+              { icon: 'c6', color: '#000000' },
+              { icon: 'xp', color: '#000' },
+              { icon: 'rico', color: '#ff5200' },
+              { icon: 'bitcoin', color: '#f7931a' },
+              { icon: 'ethereum', color: '#3C3C3B' },
+            ],
+          },
+        },
       },
     });
 

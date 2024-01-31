@@ -4,18 +4,18 @@ const prisma = new PrismaClient();
 
 interface CreateBankAcountProps {
   userId: string,
+  categoryId: string
   name: string,
   initialBalance: number,
   type: 'CHECKING' | 'INVESTMENT' | 'CASH',
-  color: string
 }
 
 interface UpdateBankAcountProps {
   bankAccountId: string,
+  categoryId: string
   name: string,
   initialBalance: number,
   type: 'CHECKING' | 'INVESTMENT' | 'CASH',
-  color: string
 }
 
 class BankAccountsRepository {
@@ -27,6 +27,13 @@ class BankAccountsRepository {
           select: {
             value: true,
             type: true,
+          },
+        },
+        categoryBankAccount: {
+          select: {
+            id: true,
+            color: true,
+            icon: true,
           },
         },
       },
@@ -53,21 +60,21 @@ class BankAccountsRepository {
   }
 
   async create({
-    userId, name, initialBalance, type, color,
+    userId, name, initialBalance, type, categoryId,
   }: CreateBankAcountProps) {
     return prisma.bankAccount.create({
       data: {
         userId,
+        categoryId,
         name,
         initialBalance,
         type,
-        color,
       },
     });
   }
 
   async update({
-    bankAccountId, name, initialBalance, type, color,
+    bankAccountId, name, initialBalance, type, categoryId,
   }: UpdateBankAcountProps) {
     return prisma.bankAccount.update({
       where: { id: bankAccountId },
@@ -75,7 +82,7 @@ class BankAccountsRepository {
         name,
         initialBalance,
         type,
-        color,
+        categoryId,
       },
     });
   }
@@ -83,6 +90,12 @@ class BankAccountsRepository {
   async remove(bankAccountId: string) {
     return prisma.bankAccount.delete({
       where: { id: bankAccountId },
+    });
+  }
+
+  async findFirstCategoryBankAccountId(categoryBankAccountId: string, userId: string) {
+    return prisma.categoryBankAccount.findFirst({
+      where: { id: categoryBankAccountId, userId },
     });
   }
 }

@@ -12,7 +12,9 @@ export const createBankAccountDto = z.object({
 
   type: z.enum(['CHECKING', 'INVESTMENT', 'CASH']),
 
-  color: z.string().min(1, 'color is required').refine(isValidHexColor, {
-    message: 'Invalid hexadecimal color',
-  }),
+  categoryId: z.string().min(1, 'category is required').uuid(),
+
+  // color: z.string().min(1, 'color is required').refine(isValidHexColor, {
+  //   message: 'Invalid hexadecimal color',
+  // }),
 });

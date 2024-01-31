@@ -20,15 +20,24 @@ class BankAccountsController {
     try {
       const { userId } = req;
       const {
-        name, initialBalance, type, color,
+        name, initialBalance, type, categoryId,
       } = createBankAccountDto.parse(req.body);
+
+      const isOwnerCategory = await BankAccountsRepository.findFirstCategoryBankAccountId(
+        categoryId,
+        userId,
+      );
+
+      if (!isOwnerCategory) {
+        return res.status(404).json({ message: 'Category not found' });
+      }
 
       const newBankAccount = await BankAccountsRepository.create({
         userId,
+        categoryId,
         name,
         initialBalance,
         type,
-        color,
       });
 
       return res.json(newBankAccount);
@@ -45,25 +54,33 @@ class BankAccountsController {
       const { userId } = req;
       const { bankAccountId } = req.params;
       const {
-        name, initialBalance, type, color,
+        name, initialBalance, type, categoryId,
       } = updateBankAccountDto.parse(req.body);
 
       if (!isValidUUID(bankAccountId)) {
         return res.status(400).json({ message: 'invalid uuid' });
       }
 
-      const isOwner = await BankAccountsRepository.findFirst(bankAccountId, userId);
+      const isOwnerBankAccount = await BankAccountsRepository.findFirst(bankAccountId, userId);
+      const isOwnerCategory = await BankAccountsRepository.findFirstCategoryBankAccountId(
+        categoryId,
+        userId,
+      );
 
-      if (!isOwner) {
-        return res.status(400).json({ message: 'bank account not found' });
+      if (!isOwnerBankAccount) {
+        return res.status(404).json({ message: 'Bank account not found' });
+      }
+
+      if (!isOwnerCategory) {
+        return res.status(404).json({ message: 'Category not found' });
       }
 
       const updateBankAccount = await BankAccountsRepository.update({
         bankAccountId,
+        categoryId,
         name,
         initialBalance,
         type,
-        color,
       });
 
       return res.json(updateBankAccount);
